@@ -97,7 +97,7 @@ void StatisticMultiset<T>::AddNums(const Container& numbers)
 template<class T>
 void StatisticMultiset<T>::AddNumsFromFile(const char* fileName)
 {
-	fstream file(fileName);
+	ifstream file(fileName);
 	while (file.good())
 	{
 		T x;
@@ -111,6 +111,7 @@ T StatisticMultiset<T>::GetMax() const
 {
 	if (Data.size() == 0)
 		throw EmptySetException();
+
 	if (!MaxCached)
 	{
 		MaxCachedValue = *(Data.begin());
@@ -124,6 +125,7 @@ T StatisticMultiset<T>::GetMin() const
 {
 	if (Data.size() == 0)
 		throw EmptySetException();
+
 	if (!MinCached)
 	{
 
@@ -140,6 +142,7 @@ float StatisticMultiset<T>::GetAvg() const
 {
 	if (Data.size() == 0)
 		throw EmptySetException();
+
 	if (!AvgCached)
 	{
 		AvgCachedValue = 0;
@@ -158,16 +161,17 @@ unsigned int StatisticMultiset<T>::GetCountUnder(float value) const
 {
 	if (Data.size() == 0)
 		throw EmptySetException();
+
+	unsigned int ans;
 	if (!CountUnderCached)
 	{
-		CountUnderCachedValue.erase(CountUnderCachedValue.begin(), CountUnderCachedValue.end());
-		unsigned int ans = std::distance(Data.begin(), Data.lower_bound(value));
+		CountUnderCachedValue.clear();
+		ans = std::distance(Data.begin(), Data.lower_bound(value));
 		CountUnderCachedValue.push_front(std::make_pair(value, ans));
 		CountUnderCached = true;
 		return ans;
 	}
 
-	unsigned int ans;
 	for (auto it = CountUnderCachedValue.begin(); it != CountUnderCachedValue.end(); it++)
 	{
 		if (it->first == value)
@@ -193,16 +197,17 @@ unsigned int StatisticMultiset<T>::GetCountAbove(float value) const
 {
 	if (Data.size() == 0)
 		throw EmptySetException();
+
+	unsigned int ans;
 	if (!CountAboveCached)
 	{
-		CountAboveCachedValue.erase(CountAboveCachedValue.begin(), CountAboveCachedValue.end());
-		unsigned int ans = std::distance(Data.upper_bound(value), Data.end());
+		CountAboveCachedValue.clear());
+		ans = std::distance(Data.upper_bound(value), Data.end());
 		CountAboveCachedValue.push_front(std::make_pair(value, ans));
 		CountAboveCached = true;
 		return ans;
 	}
 
-	unsigned int ans;
 	for (auto it = CountAboveCachedValue.begin(); it != CountAboveCachedValue.end(); it++)
 	{
 		if (it->first == value)
