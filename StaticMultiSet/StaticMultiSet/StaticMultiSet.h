@@ -201,7 +201,7 @@ unsigned int StatisticMultiset<T>::GetCountAbove(float value) const
 	unsigned int ans;
 	if (!CountAboveCached)
 	{
-		CountAboveCachedValue.clear());
+		CountAboveCachedValue.clear();
 		ans = std::distance(Data.upper_bound(value), Data.end());
 		CountAboveCachedValue.push_front(std::make_pair(value, ans));
 		CountAboveCached = true;
