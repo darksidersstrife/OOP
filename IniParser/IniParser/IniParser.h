@@ -5,7 +5,7 @@
 #include <map>
 #include <sstream>
 #include "IniParserExceptions.h"
-#include <logger.h>
+#include "../../logger/logger.h"
 
 
 class IniParser

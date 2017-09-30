@@ -6,9 +6,9 @@
 #include <deque>
 #include <fstream>
 
-class EmptySetException
+class EmptySetException : public std::exception
 {
-
+	EmptySetException() : exception("Set is empty") {};
 };
 
 template<class T>
